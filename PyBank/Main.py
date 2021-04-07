@@ -29,12 +29,7 @@ with open(csvpath) as csv_file:
 
     for row in csv_reader:
         data_csv.append(row)
-
-# print(header_csv)
-
-# for row in data_csv:
-#     print(row[1])
-
+# print(data_csv)
 # ------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -46,6 +41,13 @@ def bank_analysis(data):
     net_profit_loss = 0
     changes = []
     prev_value = 0
+    greatest_increase = 0
+    greatest_decrease = 0
+    month_increase = ''
+    month_decrease = ''
+    count = 0
+
+
     
     for row in data:
 
@@ -57,15 +59,59 @@ def bank_analysis(data):
             
             changes.append(int(row[1]) - prev_value)
 
+            # For each iteration, this will capture the greatest increase and the respective month
+            if greatest_increase < changes[count]:
+                greatest_increase = changes[count]
+                month_increase = row[0]
+
+            # For each iteration, this will capture the greatest decrease and the respective month
+            if greatest_decrease > changes[count]:
+                greatest_decrease = changes[count]
+                month_decrease = row[0]
+
+            #This count increase by one each time the row changes so that the "changes" variable will follow the correct row
+            count += 1
+
         prev_value = int(row[1])
+
+        
+
+        
 
     avg_change = stat.mean(changes)
 
-    print(months)
-    #print(changes)
-    print(round(avg_change, 2))
+#    Final Printout of Financial Analysis in Terminal
 
-    return net_profit_loss
+    print("Financial Analysis")
+    print("----------------------------------------------------------------------")
+    print(f"Total Months: {months}")
+    print(f"Total: ${net_profit_loss}")
+    print(f"Average Change: ${round(avg_change, 2)}")
+    print(f"Greatest Increase in Profits: {month_increase} (${str(greatest_increase)})")
+    print(f"Greatest Decrease in Profits: {month_decrease} (${str(greatest_decrease)})")
+   
 
-print(bank_analysis(data_csv))
+#    Creating Final Printout as Output File
+
+    output_path = os.path.join('..', 'Solutions', 'PyBank_Output.txt')
+    with open(output_path, 'w', newline='') as txtfile:
+
+        txtfile.writelines(
+            
+        "Financial Analysis\n"
+        "----------------------------------------------------------------------\n"
+        f"Total Months: {months}\n"
+        f"Total: ${net_profit_loss}\n"
+        f"Average Change: ${round(avg_change, 2)}\n"
+        f"Greatest Increase in Profits: {month_increase} (${str(greatest_increase)})\n"
+        f"Greatest Decrease in Profits: {month_decrease} (${str(greatest_decrease)})\n"
+
+
+
+
+        )
+       
+    return None
+
+bank_analysis(data_csv)
 
