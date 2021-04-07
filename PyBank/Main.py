@@ -6,9 +6,7 @@ import statistics as stat
 csvpath = os.path.join('..', 'Resources', 'budget_data.csv')
 # print(csvpath)
 
-file_to_output = os.path.join('..', 'Python_Challenge', 'Analysis','Budget_Analysis.csv')
-
-#print(file_to_output)
+# Declaring variables for full csv, header only, and data only
 
 full_csv = []
 header_csv = []
