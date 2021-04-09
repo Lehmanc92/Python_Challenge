@@ -36,28 +36,55 @@ total_votes = 0
 candidate_list = []
 candidate_votes = []
 candidate_totals = {}
+candidate_percentages = []
+winning_vote = 0
+winner = ""
 
-# Create candidate list by finding all unique candidates in data
+#  This for-loop will find all unique candidates and tally up all of their votes
 
 for row in data_csv:
 
+    # This if statement sets up a candidate if they have not been encountered in the file yet
     if row[2] not in candidate_list:
-        candidate_list.append(row[2])
-        candidate_totals[row[2]] = 0
-        candidate_votes.append(1)
+        candidate_list.append(row[2])  #This finds any unique candidate name and adds it to candidate_list
+        candidate_totals[row[2]] = 0   #This creates a dictionary with the unique candidate as a key and their first vote as the value
+        candidate_votes.append(1)     #This updates the vote count for each candidate in a separate candidate_votes list
+        total_votes += 1              #Updates the total vote count
     
-    #Tally votes for each candidate
+    #Tally votes for each candidate if they're already in the list
     
     else:
-        candidate_votes[candidate_list.index(row[2])] += 1
+        candidate_votes[candidate_list.index(row[2])] += 1 #Updates the individual's vote count in the candidate_votes list
+        total_votes += 1            #Updates the total vote count
 
-# for candidate in candidate_list:
-#     candidate_totals[candidate] = 0
+# calculates the percentages for each candidate and appends them to the candidate_percentages list
+for vote in candidate_votes:
+    candidate_percentages.append(round((vote / total_votes) * 100, 3))
 
-# for row in data_csv:
-#     if 
+for vote in range(len(candidate_votes)):
+    if candidate_votes[vote] >= winning_vote:
+        winner = candidate_list[vote]
+        winning_vote = candidate_votes[vote]
 
 
-print(candidate_list)
-print(candidate_votes)
-print(candidate_totals)
+# print(candidate_list)
+# print(candidate_votes)
+# print(candidate_totals)
+# print(candidate_percentages)
+# print(total_votes)
+# print(winner)
+# print(winning_vote)
+
+print(
+    f'Election Results\n'
+    f'-------------------------------------------------------\n'
+    f'Total Votes: {total_votes}\n'
+    f'-------------------------------------------------------\n')
+for candidate in range(len(candidate_list)):
+    print(
+        candidate_list[candidate] + ": " + str(candidate_percentages[candidate]) + "% (" + str(candidate_votes[candidate]) + ")"
+    )
+print(
+    f'-------------------------------------------------------\n'
+    f'Winner: {winner}\n'
+    f'-------------------------------------------------------\n')
