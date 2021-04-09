@@ -15,7 +15,7 @@ data_csv = []
 with open(csvpath) as csv_file:
     csv_reader = csv.reader(csv_file, delimiter = ',')
 
-    print(csv_reader)
+    #print(csv_reader)
 
     # #Read the header row
 
@@ -61,16 +61,18 @@ for row in data_csv:
 for vote in candidate_votes:
     candidate_percentages.append(round((vote / total_votes) * 100, 3))
 
+# determines which candidate received the most votes, and saves the winning name to a variable
 for vote in range(len(candidate_votes)):
     if candidate_votes[vote] >= winning_vote:
         winner = candidate_list[vote]
         winning_vote = candidate_votes[vote]
 
+# Creates a candidate summary so all candidate info can be printed for output file
 candidate_summary = ''
 for candidate in range(len(candidate_list)):
        candidate_summary += candidate_list[candidate] + ": " + str(candidate_percentages[candidate]) + "% (" + str(candidate_votes[candidate]) + ")\n"
 
-print(candidate_summary)
+# print(candidate_summary)
 # print(candidate_list)
 # print(candidate_votes)
 # print(candidate_totals)
