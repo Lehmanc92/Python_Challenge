@@ -66,7 +66,11 @@ for vote in range(len(candidate_votes)):
         winner = candidate_list[vote]
         winning_vote = candidate_votes[vote]
 
+candidate_summary = ''
+for candidate in range(len(candidate_list)):
+       candidate_summary += candidate_list[candidate] + ": " + str(candidate_percentages[candidate]) + "% (" + str(candidate_votes[candidate]) + ")\n"
 
+print(candidate_summary)
 # print(candidate_list)
 # print(candidate_votes)
 # print(candidate_totals)
@@ -79,12 +83,31 @@ print(
     f'Election Results\n'
     f'-------------------------------------------------------\n'
     f'Total Votes: {total_votes}\n'
-    f'-------------------------------------------------------\n')
-for candidate in range(len(candidate_list)):
-    print(
-        candidate_list[candidate] + ": " + str(candidate_percentages[candidate]) + "% (" + str(candidate_votes[candidate]) + ")"
-    )
-print(
+    f'-------------------------------------------------------\n'
+    f'{candidate_summary}'
     f'-------------------------------------------------------\n'
     f'Winner: {winner}\n'
     f'-------------------------------------------------------\n')
+
+
+#    Creating Final Printout as Output File
+
+output_path = os.path.join('..', 'Solutions', 'PyPoll_Output.txt')
+with open(output_path, 'w', newline='') as txtfile:
+
+    txtfile.writelines(
+        
+    f'Election Results\n'
+    f'-------------------------------------------------------\n'
+    f'Total Votes: {total_votes}\n'
+    f'-------------------------------------------------------\n'
+    f'{candidate_summary}'
+    f'-------------------------------------------------------\n'
+    f'Winner: {winner}\n'
+    f'-------------------------------------------------------\n'
+
+
+
+
+        )
+    
